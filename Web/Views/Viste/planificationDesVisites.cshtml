@@ -1,0 +1,623 @@
+﻿@{
+    Layout = "_LayoutPharmaShop";
+}
+@model Web.Models.PVVM
+
+<!--**********************************
+    Sidebar end
+***********************************-->
+
+<!--**********************************
+    Content body start
+***********************************-->
+<div class="content-body">
+<!-- row -->
+<div class="container-fluid">
+    <div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+        <h4>Planification des visites</h4>
+        <!-- <span>Element</span>-->
+        </div>
+    </div>
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0)"> Gestions des visites</a></li>
+        <li class="breadcrumb-item active"><a href="javascript:void(0)">Planification des visites</a></li>
+        </ol>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-xl-3">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-intro-title mb-3">Nature Visite</h4>
+           
+            <div class="InputGroup">
+                <input type="radio" name="naturevisite" id="nature_1" value="23f828e7-8f7b-4683-951f-bcdc87f217f4" />
+                <label for="nature_1">Pharmaceutique</label>
+
+                <input type="radio" name="naturevisite" id="nature_2" value="1970a121-fb35-4a12-800e-4254f808b4f5" />
+                <label for="nature_2">Dermo-Conseillère</label>
+            </div>
+            <h4 class="card-intro-title mt-5 mb-3">Visiteur Pharmaceutique</h4>
+
+            <div class="InputGroup" id="visiteurPhContainer"> 
+
+                    
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xl-9">
+    <div class="card">
+        <div class="card-body">
+        <div id='calendarF'></div>
+        <div id='calendar'></div>
+
+            <!-- Add modal -->
+
+<div class="modal fade edit-form" id="form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="modal-title">Ajouter une visite</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="myForm" class="needs-validation" method="post" onsubmit="theButton.disabled = true; return true;" asp-action="AddPlanningViste">
+                    <div class="modal-body">
+                        <div class="alert alert-danger " role="alert" id="danger-alert" style="display: none;">
+                            End date should be greater than start date.
+                        </div>
+                        <div class="form-group">
+                            <label for="event-title">Clients <span class="text-danger">*</span></label>
+                            <input type="hidden" asp-for="pv.PlanningVisite_userId" id="userId"/>
+                             
+                            <select asp-for="pv.PlanningVisite_ClientId" class="form-control" id="event-title" required asp-items="@ViewBag.clients">
+                               
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="start-date">Date Début <span class="text-danger">*</span></label>
+                            <input asp-for="pv.PlanningVisite_DateVisite" type="date" class="form-control" id="start-date" placeholder="start-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="end-date">Date Fin - <small class="text-muted">Optional</small></label>
+                            <input asp-for="pv.PlanningVisite_DateFin" type="date" class="form-control" id="end-date" placeholder="end-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-color">Couleur</label>
+                            <input type="color" asp-for="pv.PlanningVisite_Color" class="form-control" id="event-color" value="#3788d8">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success" id="submit-button">Ajouter une visite</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+<!-- Update modal -->
+<div class="modal fade edit-form" id="form2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="modal-title2">Modifier une visite</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="myForm2" class="needs-validation" method="post" onsubmit="theButton.disabled = true; return true;" asp-action="ModifierPlanningViste">
+                    <div class="modal-body">
+                        <div class="alert alert-danger " role="alert" id="danger-alert2" style="display: none;">
+                            End date should be greater than start date.
+                        </div>
+                        <div class="form-group">
+                                <label for="event-title">Clients <span class="text-danger">*</span></label>
+                                <input type="hidden" id="pvID" asp-for="pvUpdate.PlanningVisite_Id" />
+                                <select asp-for="pvUpdate.PlanningVisite_ClientId" class="form-control" id="event-title2" asp-items="@ViewBag.clients">
+                               
+                                    <option></option>
+                                    
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="start-date">Date Début <span class="text-danger">*</span></label>
+                            <input asp-for="pvUpdate.PlanningVisite_DateVisite" type="date" class="form-control" id="start-date2" placeholder="start-date" >
+                        </div>
+                        <div class="form-group">
+                            <label for="end-date">Date Fin - <small class="text-muted">Optional</small></label>
+                            <input asp-for="pvUpdate.PlanningVisite_DateFin" type="date" class="form-control" id="end-date2" placeholder="end-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-color">Couleur</label>
+                            <input type="color" asp-for="pvUpdate.PlanningVisite_Color" class="form-control" id="event-color2" value="#3788d8">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success" id="submit-button2">Modifier une visite</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-title" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="delete-modal-title">Confirmer la suppression</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body text-center" id="delete-modal-body">
+    Êtes-vous sûr de vouloir supprimer la visite ?
+    </div>
+    <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary rounded-sm" data-dismiss="modal" id="cancel-button">Annuler</button>
+    <button type="button" class="btn btn-danger rounded-lg" id="delete-button">Supprimer</button>
+    </div>
+</div>
+</div>
+</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+</div>
+
+
+
+</div>
+<!--**********************************
+Main wrapper end
+***********************************-->
+
+<div class="modal fade" id="ModalDelegue">
+<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Visiteur 1</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+        <div class="col-md-12">
+
+            <div class="row">
+            <div class="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
+                <div class="table-responsive">
+                <table class="table" style="width: 100%; margin: 20px auto">
+                    <thead class="thead-info">
+                    <tr>
+                        <th scope="col">Nom Commercial</th>
+                        <th scope="col">RC</th>
+                        <th scope="col">Ville</th>
+                        <th scope="col">Région PharmaShop</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td width="15%">Pharmacie x</td>
+                        <td width="15%">10000</td>
+                        <td width="15%">Casablanca</td>
+                        <td width="15%">Casablanca</td>
+
+                    </tr>
+                    <tr>
+                        <td width="15%">Pharmacie y</td>
+                        <td width="15%">10001</td>
+                        <td width="15%">Casablanca</td>
+                        <td width="15%">Casablanca</td>
+
+                    </tr>
+
+
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-pharma" data-bs-dismiss="modal">Fermer</button>
+    </div>
+    </div>
+</div>
+</div>
+
+@section Scripts {
+ <script>
+    var radioButtons = document.getElementsByName('naturevisite');
+
+    
+    radioButtons.forEach(function (radioButton) {
+        radioButton.addEventListener('change', function () {
+            console.log("hii");
+            updateVisitors();
+        });
+    });
+
+    function updateVisitors() {
+        var selectedNature = document.querySelector('input[name="naturevisite"]:checked').value;
+        var container = document.getElementById('visiteurPhContainer');
+        console.log("Selected Nature:", selectedNature);
+        $.ajax({
+                url: '@Url.Action("GetListUsers", "Viste")',
+                type: "GET",
+                data: { roleId: selectedNature }, 
+                cache: false,
+                async: false,
+                success: function (data) {
+                     console.log(data);
+                    container.innerHTML = '';
+                    // Populate radio buttons based on the received data
+                    data.forEach(function (visiteur, index) {
+                        console.log("visiteur ",visiteur);
+                        console.log("index ",index);
+                        var input = document.createElement('input');
+                        input.type = 'radio';
+                        input.name = 'visiteurpharmaceutiue';
+                        input.id = 'visiteur_' + (index + 1);
+                        input.value = visiteur.user.id;
+                        var label = document.createElement('label');
+                        label.htmlFor = 'visiteur_' + (index + 1);
+                        label.textContent = visiteur.user.userName;
+                        // Append input and label to the container
+                        container.appendChild(input);
+                        container.appendChild(label);
+                        // Add event listener to the new radio button
+                        input.addEventListener('change', function () {
+                            // Call a function to update calendar based on selected user
+                            document.getElementById("userId").value=visiteur.user.id;
+                            getPlanningData(visiteur.user.id);
+                        });
+                    });
+
+                },
+                error: function () {
+                    alert("Erreur");
+                }
+        });
+    }
+ </script>
+ <script>
+    let myEvents =  [];    
+    let Planning = [];
+    function getPlanningData(userId){
+
+        document.getElementById("calendarF").style.display="none";
+
+       let calendarEl = document.getElementById('calendar');
+        const myModal = new bootstrap.Modal(document.getElementById('form'));
+        const dangerAlert = document.getElementById('danger-alert');
+        const close = document.querySelector('.btn-close');
+
+        $.ajax({
+            url: '@Url.Action("GetListePlanning", "Viste")',
+            type: "GET",
+            data: { userId: userId },
+            async:false,
+            cache: false,
+            success: function (data) {
+                console.log("data",data);
+                for (var i = 0; i < data.length; i++) {
+                    let rawDate = data[i].planningVisite_DateVisite;
+                    let formattedDate = new Date(rawDate).toISOString().split('T')[0];
+                    let rawDate2 = data[i].planningVisite_DateFin;
+                    let formattedDate2 = new Date(rawDate2).toISOString().split('T')[0];
+                    let nouvelElement = {
+                        id: data[i].planningVisite_Id,
+                        title: data[i].planningVisiteClient.client_RaisonSociale,
+                        start: data[i].planningVisite_DateVisite, // Assurez-vous que la propriété date est présente dans vos données
+                        backgroundColor: data[i].planningVisite_Color,
+                        end: rawDate2,
+                        allDay: false,
+                        editable: false
+                    };
+                    Planning.push(nouvelElement);
+
+                }
+                //myEvents = myEvents.concat(Planning);
+                console.log("myEvents ",myEvents);
+                console.log("Planning ",Planning);
+                    
+            },
+            error: function () {
+                alert("Erreur");
+            }
+        });
+   
+        myEvents = myEvents.concat(Planning);
+        console.log("myEvents2 ",myEvents);
+        console.log("Planning2 ",Planning);
+
+        calendarEl.addEventListener("dblclick", (e) => {
+
+            $('.fc-highlight').each(function () {
+                myModal.show();
+                const modalTitle = document.getElementByClassName('modal-title');
+                const submitButton = document.getElementById('submit-button');
+                modalTitle.innerHTML = 'Ajouter une visite'
+                submitButton.innerHTML = 'Ajouter une visite'
+                submitButton.classList.remove('btn-primary');
+                submitButton.classList.add('btn-success');
+
+
+                close.addEventListener('click', () => {
+                    myModal.hide()
+                })
+
+            });
+
+        });
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+              
+            header: {
+                center: 'customButton', // add your custom button here
+                right: 'today, prev,next '
+            },
+            plugins: ['dayGrid', 'interaction'],
+            allDay: false,
+            editable: true,
+            selectable: true,
+            unselectAuto: false,
+            displayEventTime: false,
+            events: myEvents,
+            eventRender: function (info) {
+                info.el.addEventListener('contextmenu', function (e) {
+                    e.preventDefault();
+                    let existingMenu = document.querySelector('.context-menu');
+                    existingMenu && existingMenu.remove();
+                    let menu = document.createElement('div');
+                    menu.className = 'context-menu';
+                    menu.innerHTML = `<ul>
+                            <li><i class="fas fa-edit"></i>Modifier</li>
+                            <li><i class="fas fa-trash-alt"></i>Supprimer</li>
+                            </ul>`;
+
+                    const eventIndex = myEvents.findIndex(event => event.id === info.event.id);
+
+
+                    document.body.appendChild(menu);
+                    menu.style.top = e.pageY + 'px';
+                    menu.style.left = e.pageX + 'px';
+
+                    // Edit context menu
+
+                    menu.querySelector('li:first-child').addEventListener('click', function () {
+                        menu.remove();
+
+                        const editModal = new bootstrap.Modal(document.getElementById('form2'));
+                        const modalTitle = document.getElementById('modal-title2');
+                        const titleInput = document.getElementById('event-title2');
+                        const startDateInput = document.getElementById('start-date2');
+                        const endDateInput = document.getElementById('end-date2');
+                        const colorInput = document.getElementById('event-color2');
+                        const pvId = document.getElementById('pvID');
+                        //const submitButton = document.getElementById('submit-button2');
+                        const cancelButton = document.getElementById('cancel-button2');
+                        //modalTitle.innerHTML = 'Edit Event';
+                        titleInput.value = info.event.title;
+                        var valueToSelect = "1";
+                        var selectElement = document.getElementById("event-title2");
+
+                        // Loop through options to find the one with the desired value and select it
+                        for (var i = 0; i < selectElement.options.length; i++) {
+                            if (selectElement.options[i].text.trim() === info.event.title.trim()) {
+                                selectElement.selectedIndex = i;
+                                break;
+                            }
+                        }
+                        pvId.value=info.event.id;
+                        console.log("hhhhhhhhhhheloo");
+                        console.log(titleInput.value);
+                        startDateInput.value = moment(info.event.start).format('YYYY-MM-DD');
+                        endDateInput.value = moment(info.event.end, 'YYYY-MM-DD').subtract(1, 'day').format('YYYY-MM-DD');
+                        colorInput.value = info.event.backgroundColor;
+                        //submitButton.innerHTML = 'Save Changes';
+
+                        editModal.show();
+
+                    });
+                      
+                    // Delete menu
+                    menu.querySelector('li:last-child').addEventListener('click', function () {
+                       
+                            const pvId = info.event.id; // Get the ID you want to delete
+                            console.log("hiiiiiiii delete");
+                            deletePv(pvId);
+
+                    });
+                    document.addEventListener('click', function () {
+                        menu.remove();
+                    });
+                });
+            },
+
+            
+
+        });
+
+        calendar.on('select', function (info) {
+
+            const startDateInput = document.getElementById('start-date');
+            const endDateInput = document.getElementById('end-date');
+            startDateInput.value = info.startStr;
+            const endDate = moment(info.endStr, 'YYYY-MM-DD').subtract(1, 'day').format('YYYY-MM-DD');
+            endDateInput.value = endDate;
+            if (startDateInput.value === endDate) {
+                endDateInput.value = '';
+            }
+        });
+
+
+        calendar.render();
+
+        const form = document.querySelector('form');
+
+
+        form.reset();
+
+
+        myModal._element.addEventListener('hide.bs.modal', function () {
+            dangerAlert.style.display = 'none';
+            form.reset();
+        });
+
+    }
+       
+
+
+</script>
+<script>
+    @if((int?)TempData["create"] == 1){
+        <text>
+            createSuccess()
+        </text>
+    }
+    function createSuccess(){
+        swal(
+        'Succès',
+        'Planning Visite ajoutée avec <b style="color:green;">Succès</b> !',
+        'success'
+    )
+    }
+     @if((int?)TempData["create"] == 0){
+        <text>
+            DeleteError()
+        </text>
+    }
+        
+    @if((int?)TempData["updatePv"] == 1){
+        <text>
+            UpdateSuccess()
+        </text>
+    }
+    function UpdateSuccess(){
+        swal(
+        'Succès',
+        'Planning Visite modifiée avec <b style="color:green;">Succès</b> !',
+        'success'
+    )
+    }
+    @if((int?)TempData["updatePv"] == 0){
+        <text>
+            DeleteError()
+        </text>
+    }
+        
+    function DeleteError(){
+        swal(
+            'Error!',
+            'Une erreur est  <b style="color:red;">survenue</b>!',
+            'error'
+        )           
+    }
+        
+    // Alert delete
+    function deletePv(pvId){
+           
+        console.log(pvId);
+            
+        swal({
+            title: "Êtes-vous sûr de bien vouloir efffectuer cette action ?",
+            text: "Vous ne pouvez pas revenir en arrière !",
+            type: "warning",
+            confirmButtonText: "Oui",
+            showCancelButton: true
+        })
+        .then((result) => {
+            if (result.value) {
+                // Execute your AJAX request to call the deletePays function in your controller
+                $.ajax({
+                    url: '@Url.Action("deletePv", "viste")', // Replace with your controller and action name
+                    type: 'POST', // Use POST or GET as appropriate
+                    data:{ Id: pvId },
+                    success: function(data) {
+                        // Handle the success response if needed
+                        if(data==true)
+                        {
+                            console.log(data);
+                            swal(
+                            'Supprimé!',
+                            'Votre fichier a été supprimé',
+                            'success'
+                            )
+                                
+
+                        }
+                        else
+                        {
+                            swal(
+                            'Erreur',
+                            'Une erreur s\'est produite lors de la suppression.',
+                            'error'
+                            )
+
+                        }
+                        window.location.reload();
+                           
+                    },
+                    error: function() {
+                        // Handle the error if needed
+                        swal(
+                            'Erreur',
+                            'Une erreur s\'est produite lors de la suppression.',
+                            'error'
+                                
+                        );
+                    }
+                });
+            } else if (result.dismiss === 'cancel') {
+                swal(
+                    'Annuler',
+                    '',
+                    'error'
+                );
+            }
+        });
+    }
+
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+            let calendarEl = document.getElementById('calendarF');
+            let myEvents2 =  [];
+            let initialCalendar  = new FullCalendar.Calendar(calendarEl, {
+                header: {
+                    center: 'customButton', // add your custom button here
+                    right: 'today, prev,next '
+                },
+                plugins: ['dayGrid', 'interaction'],
+                allDay: false,
+                editable: true,
+                selectable: true,
+                unselectAuto: false,
+                displayEventTime: false,
+                events: myEvents2,
+            });
+
+            initialCalendar.render();
+ 
+            
+ 
+    });
+ 
+ 
+</script>
+}
+
+
+
+
+

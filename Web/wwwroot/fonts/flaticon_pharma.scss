@@ -1,0 +1,117 @@
+$flaticon_pharma-font: "flaticon_pharma";
+
+@font-face {
+    font-family: $flaticon_pharma-font;
+    src: url("./flaticon_pharma.ttf?76cf7396723c3198e464ca82a84050a5") format("truetype"),
+url("./flaticon_pharma.woff?76cf7396723c3198e464ca82a84050a5") format("woff"),
+url("./flaticon_pharma.woff2?76cf7396723c3198e464ca82a84050a5") format("woff2"),
+url("./flaticon_pharma.eot?76cf7396723c3198e464ca82a84050a5#iefix") format("embedded-opentype"),
+url("./flaticon_pharma.svg?76cf7396723c3198e464ca82a84050a5#flaticon_pharma") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon_pharma !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$flaticon_pharma-map: (
+    "settings": "\f101",
+    "settings-1": "\f102",
+    "event": "\f103",
+    "calendar": "\f104",
+    "research": "\f105",
+    "search": "\f106",
+    "investigation": "\f107",
+    "binoculars": "\f108",
+    "binoculars-1": "\f109",
+    "binocular": "\f10a",
+    "binoculars-2": "\f10b",
+    "spy": "\f10c",
+    "investigation-1": "\f10d",
+    "transparency": "\f10e",
+    "context": "\f10f",
+    "event-1": "\f110",
+    "calendars": "\f111",
+    "cogwheel": "\f112",
+    "settings-2": "\f113",
+    "pie-chart": "\f114",
+    "statistics": "\f115",
+    "binoculars-3": "\f116",
+    "binocular-1": "\f117",
+);
+
+.flaticon-settings:before {
+    content: map-get($flaticon_pharma-map, "settings");
+}
+.flaticon-settings-1:before {
+    content: map-get($flaticon_pharma-map, "settings-1");
+}
+.flaticon-event:before {
+    content: map-get($flaticon_pharma-map, "event");
+}
+.flaticon-calendar:before {
+    content: map-get($flaticon_pharma-map, "calendar");
+}
+.flaticon-research:before {
+    content: map-get($flaticon_pharma-map, "research");
+}
+.flaticon-search:before {
+    content: map-get($flaticon_pharma-map, "search");
+}
+.flaticon-investigation:before {
+    content: map-get($flaticon_pharma-map, "investigation");
+}
+.flaticon-binoculars:before {
+    content: map-get($flaticon_pharma-map, "binoculars");
+}
+.flaticon-binoculars-1:before {
+    content: map-get($flaticon_pharma-map, "binoculars-1");
+}
+.flaticon-binocular:before {
+    content: map-get($flaticon_pharma-map, "binocular");
+}
+.flaticon-binoculars-2:before {
+    content: map-get($flaticon_pharma-map, "binoculars-2");
+}
+.flaticon-spy:before {
+    content: map-get($flaticon_pharma-map, "spy");
+}
+.flaticon-investigation-1:before {
+    content: map-get($flaticon_pharma-map, "investigation-1");
+}
+.flaticon-transparency:before {
+    content: map-get($flaticon_pharma-map, "transparency");
+}
+.flaticon-context:before {
+    content: map-get($flaticon_pharma-map, "context");
+}
+.flaticon-event-1:before {
+    content: map-get($flaticon_pharma-map, "event-1");
+}
+.flaticon-calendars:before {
+    content: map-get($flaticon_pharma-map, "calendars");
+}
+.flaticon-cogwheel:before {
+    content: map-get($flaticon_pharma-map, "cogwheel");
+}
+.flaticon-settings-2:before {
+    content: map-get($flaticon_pharma-map, "settings-2");
+}
+.flaticon-pie-chart:before {
+    content: map-get($flaticon_pharma-map, "pie-chart");
+}
+.flaticon-statistics:before {
+    content: map-get($flaticon_pharma-map, "statistics");
+}
+.flaticon-binoculars-3:before {
+    content: map-get($flaticon_pharma-map, "binoculars-3");
+}
+.flaticon-binocular-1:before {
+    content: map-get($flaticon_pharma-map, "binocular-1");
+}

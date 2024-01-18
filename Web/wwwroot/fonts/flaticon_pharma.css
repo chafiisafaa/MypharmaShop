@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "flaticon_pharma";
+    src: url("./flaticon_pharma.ttf?76cf7396723c3198e464ca82a84050a5") format("truetype"),
+url("./flaticon_pharma.woff?76cf7396723c3198e464ca82a84050a5") format("woff"),
+url("./flaticon_pharma.woff2?76cf7396723c3198e464ca82a84050a5") format("woff2"),
+url("./flaticon_pharma.eot?76cf7396723c3198e464ca82a84050a5#iefix") format("embedded-opentype"),
+url("./flaticon_pharma.svg?76cf7396723c3198e464ca82a84050a5#flaticon_pharma") format("svg");
+}
+
+i[class^="flaticon-pharma-"]:before, i[class*=" flaticon-pharma-"]:before {
+    font-family: flaticon_pharma !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-pharma-settings:before {
+    content: "\f101";
+}
+.flaticon-pharma-settings-1:before {
+    content: "\f102";
+}
+.flaticon-pharma-event:before {
+    content: "\f103";
+}
+.flaticon-pharma-calendar:before {
+    content: "\f104";
+}
+.flaticon-pharma-research:before {
+    content: "\f105";
+}
+.flaticon-pharma-search:before {
+    content: "\f106";
+}
+.flaticon-pharma-investigation:before {
+    content: "\f107";
+}
+.flaticon-pharma-binoculars:before {
+    content: "\f108";
+}
+.flaticon-pharma-binoculars-1:before {
+    content: "\f109";
+}
+.flaticon-pharma-binocular:before {
+    content: "\f10a";
+}
+.flaticon-pharma-binoculars-2:before {
+    content: "\f10b";
+}
+.flaticon-spy:before {
+    content: "\f10c";
+}
+.flaticon-pharma-investigation-1:before {
+    content: "\f10d";
+}
+.flaticon-pharma-transparency:before {
+    content: "\f10e";
+}
+.flaticon-pharma-context:before {
+    content: "\f10f";
+}
+.flaticon-pharma-event-1:before {
+    content: "\f110";
+}
+.flaticon-pharma-calendars:before {
+    content: "\f111";
+}
+.flaticon-pharma-cogwheel:before {
+    content: "\f112";
+}
+.flaticon-pharma-settings-2:before {
+    content: "\f113";
+}
+.flaticon-pharma-pie-chart:before {
+    content: "\f114";
+}
+.flaticon-pharma-statistics:before {
+    content: "\f115";
+}
+.flaticon-pharma-binoculars-3:before {
+    content: "\f116";
+}
+.flaticon-pharma-binocular-1:before {
+    content: "\f117";
+}

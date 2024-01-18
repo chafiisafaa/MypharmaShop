@@ -1,0 +1,259 @@
+﻿@{
+    Layout = "_LayoutPharmaShop";
+}
+@model Web.Models.PVVM
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Consultation des visites réalisées</h4>
+                    <!-- <span>Element</span>-->
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)"> Gestions des visites</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Visites réalisées</a></li>
+                </ol>
+            </div>
+        </div>
+@*        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Recherche</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Nature Visite</label>
+                                <div class="dropdown bootstrap-select default-select wide form-control">
+                                    <select class="default-select wide form-control">
+                                        <option data-display="Select">Tout</option>
+                                        <option value="html">&nbsp;</option>
+                                        <option value="html">&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Visiteur</label>
+                                <div class="dropdown bootstrap-select default-select wide form-control">
+                                    <select class="default-select wide form-control">
+                                        <option data-display="Select">Tout</option>
+                                        <option value="html">&nbsp;</option>
+                                        <option value="html">&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Client</label>
+                                <div class="dropdown bootstrap-select default-select wide form-control">
+                                    <select class="default-select wide form-control">
+                                        <option data-display="Select">Tout</option>
+                                        <option value="html">&nbsp;</option>
+                                        <option value="html">&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Date Début</label>
+                                <input type="date" class="form-control">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Date Fin</label>
+                                <input type="date" class="form-control">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Etat</label>
+                                <div class="dropdown bootstrap-select default-select wide form-control">
+                                    <select class="default-select wide form-control">
+                                        <option data-display="Select">Réealisé</option>
+                                        <option value="html">Non Réealisé</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="mb-3 col-md-4">
+                                <button type="button" class="btn btn-pharma w-100">
+                                    <i class="flaticon-381-controls-5"></i>&nbsp;&nbsp; Filtrer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table" style="width: 100%; margin: 20px auto">
+                                        <thead class="thead-info">
+                                            <tr>
+                                                <th scope="col">
+                                                    Visiteur 
+                                                </th>
+                                                <th scope="col">
+                                                    Nature Visite
+                                                </th>
+                                                <th scope="col">
+                                                   Client
+                                                </th>
+                                                
+                                                <th scope="col">
+                                                    Date Début
+                                                </th>
+                                                <th scope="col">
+                                                    Date Fin
+                                                </th>
+                                                @*<th scope="col">
+                                                    Etat 
+                                                </th>*@
+                                                @*<th scope="col">
+                                                    Action
+                                                </th>*@
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach(var item in Model.pvs)
+                                            {
+                                               
+                                                    <tr>
+                                                        <td width="15%">
+                                                            @item.UserName
+                                                        </td>
+                                                        <td width="15%">
+                                                            @item.RoleName
+                                                        </td>
+                                                        <td width="15%">
+                                                            @item.planningVisiteClient.Client_RaisonSociale
+                                                        </td>
+
+                                                        <td width="15%">
+                                                            @item.PlanningVisite.PlanningVisite_DateVisite
+                                                        </td>
+                                                        <td width="15%">
+                                                            @item.PlanningVisite.PlanningVisite_DateFin
+                                                        </td>
+                                                        @*<td width="15%">
+                                                            <span class="text-success">Réalisée</span>
+                                                        </td>*@
+                                                        @*<td width="15%" style="text-align: center">
+                                                            <a data-bs-toggle="modal" data-bs-target="#ModalDelegue" href="#0">
+                                                                <i style="color:#1e9140; font-size: 20px;"
+                                                               class="flaticon-381-view-2"></i>
+                                                            </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                           
+                                                        </td>*@
+                                                    </tr>
+
+                                            }
+
+                                            
+                                           
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+
+<div class="modal fade" id="ModalDelegue">
+    <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Visiteur 1
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table" style="width: 100%; margin: 20px auto">
+                                        <thead class="thead-info">
+                                            <tr>
+                                                <th scope="col">
+                                                    Nom Commercial
+                                                </th>
+                                                <th scope="col">
+                                                    RC
+                                                </th>
+                                                <th scope="col">
+                                                    Ville
+                                                </th>
+                                                <th scope="col">
+                                                    Région PharmaShop
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td width="15%">
+                                                    Pharmacie x
+                                                </td>
+                                                <td width="15%">
+                                                    10000
+                                                </td>
+                                                <td width="15%">
+                                                    Casablanca
+                                                </td>
+                                                <td width="15%">
+                                                    Casablanca
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="15%">
+                                                    Pharmacie y
+                                                </td>
+                                                <td width="15%">
+                                                    10001
+                                                </td>
+                                                <td width="15%">
+                                                    Casablanca
+                                                </td>
+                                                <td width="15%">
+                                                    Casablanca
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-pharma" data-bs-dismiss="modal">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+           

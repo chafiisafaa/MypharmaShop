@@ -1,0 +1,21 @@
+body{
+    font-size: .8rem;
+	overflow:scroll;
+
+}
+h4, .h4 {
+	font-size: .9rem;
+}
+
+[data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li > a {
+	font-size: 13px;
+}
+
+.deznav .metismenu ul a {
+	font-size: 13px;
+    padding: 11px 13px;
+}
+
+.fc-toolbar.fc-header-toolbar {
+	margin: 0;
+}
