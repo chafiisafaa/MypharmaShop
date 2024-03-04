@@ -11,6 +11,9 @@ using Repository.Data;
 using Repository.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Domain.Models;
+using Planning.Models;
+using System.Collections.Generic;
 
 namespace Planning.Functions
 {
@@ -30,7 +33,30 @@ namespace Planning.Functions
         {
             log.LogInformation("Get all PV");
             var pvs = await _dbContext.PlanningVisite.Include(a => a.planningVisiteClient).Where(a => a.PlanningVisite_Actif == true).ToListAsync();
-            return new OkObjectResult(pvs);
+            var modalPvs = new List<ModalPv>();
+            foreach (var planningVisite in pvs)
+            {
+                var modalPv = new ModalPv
+                {
+                    PlanningVisite_Id = planningVisite.PlanningVisite_Id,
+                    PlanningVisite_CollaborateurId = planningVisite.PlanningVisite_CollaborateurId,
+                    PlanningVisite_DateVisite = planningVisite.PlanningVisite_DateVisite,
+                    PlanningVisite_HeureVisite = planningVisite.PlanningVisite_HeureVisite,
+                    PlanningVisite_ClientId = planningVisite.PlanningVisite_ClientId,
+                    PlanningVisite_Realisation = planningVisite.PlanningVisite_Realisation,
+                    PlanningVisite_DateFin = planningVisite.PlanningVisite_DateFin,
+                    PlanningVisite_Color = planningVisite.PlanningVisite_Color,
+                    PlanningVisite_Actif = planningVisite.PlanningVisite_Actif,
+                    PlanningVisite_userId = planningVisite.PlanningVisite_userId,
+                    planningVisiteClient = new ClientView()
+                    {
+                        Client_Id = planningVisite.planningVisiteClient.Client_Id,
+                        Client_RaisonSociale = planningVisite.planningVisiteClient.Client_RaisonSociale,
+                    }
+                };
+                modalPvs.Add(modalPv);
+            }
+            return new OkObjectResult(modalPvs);
 
         }
     }

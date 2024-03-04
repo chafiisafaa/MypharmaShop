@@ -19,18 +19,18 @@ namespace Web.Controllers
 
         }
         // GET: VisteController
-        public async Task<ActionResult> planificationDesVisites()
+        public async Task<ActionResult> planificationDesVisites(PVVM pvVM)
         {
 
             ViewData["clients"] = new SelectList(await _planningVisiteService.GetListeClients(), "Client_Id", "Client_RaisonSociale");
             return View();
         }
-        public async Task<ActionResult> Visites()
+        public async Task<ActionResult> Visites(PVVM pvVM)
         {
-            var pvVM = new PVVM();
-            var data = _planningVisiteService.GetListePlanning();
+            var data = _planningVisiteService.GetListePlanning(pvVM.nvId, pvVM.userId, pvVM.clientId,pvVM.dateDebut, pvVM.dateFin, pvVM.etat);
             pvVM.pvs = data;
-
+            ViewData["visiteurs"] = new SelectList(_planningVisiteService.GetListeUsers(), "Id", "UserName");
+            ViewData["nvs"] = new SelectList(_planningVisiteService.GetListeRoles(), "Id", "Name");
             ViewData["clients"] = new SelectList(await _planningVisiteService.GetListeClients(), "Client_Id", "Client_RaisonSociale");
             return View(pvVM);
         }
@@ -42,10 +42,14 @@ namespace Web.Controllers
             if (redirect)
             {
                 TempData["create"] = 1;
+                //return Json(new { success = true,userId=pvVM.pv.PlanningVisite_userId });
                 return RedirectToAction("planificationDesVisites");
             }
             TempData["create"] = 0;
+            //return Json(new { success = false });
+            //return View("planificationDesVisites", pvVM);
             return RedirectToAction("planificationDesVisites");
+            //return Json(new { success = true });
 
         }
         [HttpGet]

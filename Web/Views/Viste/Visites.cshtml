@@ -19,59 +19,58 @@
                 </ol>
             </div>
         </div>
-@*        <div class="row">
+        <div class="row">
             <div class="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Recherche</h4>
                     </div>
                     <div class="card-body">
-
+                      <form class="needs-validation" method="post" onsubmit="theButton.disabled = true; return true;" asp-action="Visites">
                         <div class="row">
                             <div class="mb-3 col-md-4">
                                 <label class="form-label">Nature Visite</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control">
-                                    <select class="default-select wide form-control">
-                                        <option data-display="Select">Tout</option>
-                                        <option value="html">&nbsp;</option>
-                                        <option value="html">&nbsp;</option>
+                                  
+                                    <select asp-for="nvId" class="default-select wide form-control" asp-items="@ViewBag.nvs">
+
+                                        <option></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="mb-3 col-md-4">
                                 <label class="form-label">Visiteur</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control">
-                                    <select class="default-select wide form-control">
-                                        <option data-display="Select">Tout</option>
-                                        <option value="html">&nbsp;</option>
-                                        <option value="html">&nbsp;</option>
+                                        <select asp-for="userId" class="default-select wide form-control" asp-items="@ViewBag.visiteurs">
+
+                                        <option></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="mb-3 col-md-4">
                                 <label class="form-label">Client</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control">
-                                    <select class="default-select wide form-control">
-                                        <option data-display="Select">Tout</option>
-                                        <option value="html">&nbsp;</option>
-                                        <option value="html">&nbsp;</option>
+                                    <select asp-for="clientId" class="default-select wide form-control" asp-items="@ViewBag.clients">
+                                        <option></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="mb-3 col-md-4">
                                 <label class="form-label">Date Début</label>
-                                <input type="date" class="form-control">
+                                <input asp-for="dateDebut" type="date" class="form-control">
                             </div>
                             <div class="mb-3 col-md-4">
                                 <label class="form-label">Date Fin</label>
-                                <input type="date" class="form-control">
+                                <input asp-for="dateFin" type="date" class="form-control">
                             </div>
                             <div class="mb-3 col-md-4">
                                 <label class="form-label">Etat</label>
                                 <div class="dropdown bootstrap-select default-select wide form-control">
-                                    <select class="default-select wide form-control">
-                                        <option data-display="Select">Réealisé</option>
-                                        <option value="html">Non Réealisé</option>
+                                    <select asp-for="etat" class="default-select wide form-control">
+                                        @*data-display="Select"*@
+                                        <option></option>
+                                        <option value="true">Réealisé</option>
+                                        <option value="false">Non Réealisé</option>
                                     </select>
                                 </div>
                             </div>
@@ -81,15 +80,16 @@
                         </div>
                         <div class="row justify-content-end">
                             <div class="mb-3 col-md-4">
-                                <button type="button" class="btn btn-pharma w-100">
+                                <button type="submit" class="btn btn-pharma w-100">
                                     <i class="flaticon-381-controls-5"></i>&nbsp;&nbsp; Filtrer
                                 </button>
                             </div>
                         </div>
+                      </form>
                     </div>
                 </div>
             </div>
-        </div>*@
+        </div>
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
                 <div class="card">
@@ -116,9 +116,9 @@
                                                 <th scope="col">
                                                     Date Fin
                                                 </th>
-                                                @*<th scope="col">
+                                                <th scope="col">
                                                     Etat 
-                                                </th>*@
+                                                </th>
                                                 @*<th scope="col">
                                                     Action
                                                 </th>*@
@@ -145,9 +145,18 @@
                                                         <td width="15%">
                                                             @item.PlanningVisite.PlanningVisite_DateFin
                                                         </td>
-                                                        @*<td width="15%">
-                                                            <span class="text-success">Réalisée</span>
-                                                        </td>*@
+                                                        <td width="15%">
+                                                            @if(item.PlanningVisite.PlanningVisite_Realisation==true)
+                                                            {
+                                                              <span class="text-success">Réalisée</span>
+
+                                                            }
+                                                            else{
+                                                                <span class="text-danger"> Non Réalisée</span>
+
+                                                            }
+                                                            
+                                                        </td>
                                                         @*<td width="15%" style="text-align: center">
                                                             <a data-bs-toggle="modal" data-bs-target="#ModalDelegue" href="#0">
                                                                 <i style="color:#1e9140; font-size: 20px;"

@@ -62,9 +62,21 @@ namespace Service.Services
             return res;
         }
 
-        public List<PlanningVisiteDetails> GetListePlanning()
+        public List<PlanningVisiteDetails> GetListePlanning(string? nvId, string? userId, int? clientId, DateTime? dateDebut, DateTime? dateFin, bool? etat)
         {
-            var res = planningVisiteRepository.GetListePlanning();
+            var res = planningVisiteRepository.GetListePlanning(nvId, userId, clientId, dateDebut, dateFin, etat);
+            return res;
+        }
+
+        public List<AspNetRoles> GetListeRoles()
+        {
+            var res = planningVisiteRepository.GetListeRoles();
+            return res;
+        }
+
+        public List<AspNetUsers> GetListeUsers()
+        {
+            var res = planningVisiteRepository.GetListeUsers();
             return res;
         }
 

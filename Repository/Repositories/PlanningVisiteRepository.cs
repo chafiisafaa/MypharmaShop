@@ -48,12 +48,66 @@ namespace Repository.Repositories
             return res;
         }
 
-        public List<PlanningVisiteDetails> GetListePlanning()
+        public List<PlanningVisiteDetails> GetListePlanning(string? nvId, string? userId, int? clientId, DateTime? dateDebut, DateTime? dateFin, bool? etat)
         {
             var result = _dbContext.PlanningVisite
-                .Include(pv => pv.planningVisiteClient)
-                .Include(pv => pv.user)
-                .Where(pv => pv.PlanningVisite_Actif == true)
+                            .Include(pv => pv.planningVisiteClient)
+                            .Include(pv => pv.user)
+                            .Where(pv => pv.PlanningVisite_Actif == true);
+
+            // Apply filters based on parameters
+            if (userId != null)
+            {
+                result = result.Where(pv => pv.PlanningVisite_userId == userId);
+            }
+
+            if (clientId != null)
+            {
+                result = result.Where(pv => pv.PlanningVisite_ClientId == clientId.Value);
+            }
+
+            if (dateDebut != null)
+            {
+                result = result.Where(pv => pv.PlanningVisite_DateVisite >= dateDebut.Value);
+            }
+
+            if (dateFin != null)
+            {
+                result = result.Where(pv => pv.PlanningVisite_DateFin <= dateFin.Value);
+            }
+
+            if (etat != null)
+            {
+                result = result.Where(pv => pv.PlanningVisite_Realisation == etat.Value);
+            }
+            if (nvId != null)
+            {
+                result = result
+                    .Join(
+                        _dbContext.AspNetUserRoles,
+                        pv => pv.PlanningVisite_userId,
+                        ur => ur.UserId,
+                        (pv, ur) => new { PlanningVisite = pv, UserRole = ur }
+                    )
+                    .Where(joined => joined.UserRole.RoleId == nvId)
+                    .Select(joined => joined.PlanningVisite);
+            }
+            else
+            {
+                result = result
+                   .Join(
+                       _dbContext.AspNetUserRoles,
+                       pv => pv.PlanningVisite_userId,
+                       ur => ur.UserId,
+                       (pv, ur) => new { PlanningVisite = pv, UserRole = ur }
+                   )
+                   .Select(joined => joined.PlanningVisite);
+
+            }
+
+            // Continue with the rest of your query
+
+            var finalResult = result
                 .Join(
                     _dbContext.AspNetUserRoles,
                     pv => pv.PlanningVisite_userId,
@@ -75,9 +129,20 @@ namespace Repository.Repositories
                 })
                 .ToList();
 
-            return result;
+            return finalResult;
         }
 
+        public List<AspNetRoles> GetListeRoles()
+        {
+            var res = _dbContext.AspNetRoles.ToList();
+            return res;
+        }
+
+        public List<AspNetUsers> GetListeUsers()
+        {
+            var res = _dbContext.AspNetUsers.ToList();
+            return res;
+        }
 
         public Task<List<AspNetUserRoles>> GetListUsers(string roleId)
         {

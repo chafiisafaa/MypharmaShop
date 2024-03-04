@@ -7,12 +7,12 @@ namespace Domain.Models
     {
         public Objet_Visite()
         {
-            Visites = new HashSet<Visite>();
+            Voss = new HashSet<VO>();
         }
 
         public int ObjetVisite_Id { get; set; }
         public string? ObjetVisite_Libelle { get; set; }
 
-        public virtual ICollection<Visite> Visites { get; set; }
+        public virtual ICollection<VO> Voss { get; set; }
     }
 }

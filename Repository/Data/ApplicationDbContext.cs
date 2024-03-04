@@ -50,6 +50,8 @@ namespace Repository.Data
         public virtual DbSet<Visibilite> Visibilite { get; set; } = null!;
         public virtual DbSet<Visibilite_Photo> Visibilite_Photo { get; set; } = null!;
         public virtual DbSet<Visite> Visite { get; set; } = null!;
+        public virtual DbSet<VO> VO { get; set; } = null!;
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -401,10 +403,10 @@ namespace Repository.Data
                 entity.HasKey(e => e.Visite_Id).HasName("PK_Visite");
 
 
-                entity.HasOne(d => d.VisiteObjet)
+                /*entity.HasOne(d => d.VisiteObjet)
                     .WithMany(p => p.Visites)
                     .HasForeignKey(d => d.Visite_ObjetId)
-                    .HasConstraintName("FK_Visite_Objet_Visite");
+                    .HasConstraintName("FK_Visite_Objet_Visite");*/
 
                 entity.HasOne(d => d.VisitePlanning)
                     .WithMany(p => p.Visites)
@@ -415,6 +417,20 @@ namespace Repository.Data
                     .WithMany(p => p.Visites)
                     .HasForeignKey(d => d.Visite_TypeAnimationId)
                     .HasConstraintName("FK_Visite_Type_Animation");
+            });
+            modelBuilder.Entity<VO>(entity =>
+            {
+                entity.HasKey(e => e.VO_Id).HasName("PK_VO");
+
+                entity.HasOne(d => d.visite)
+                    .WithMany(p => p.Vos)
+                    .HasForeignKey(d => d.VO_VisiteId)
+                    .HasConstraintName("FK_VO_Visite");
+
+                entity.HasOne(d => d.objetVisite)
+                    .WithMany(p => p.Voss)
+                    .HasForeignKey(d => d.VO_ObjetVisiteId)
+                    .HasConstraintName("FK_VO_Objet_Visite");
             });
 
             OnModelCreatingPartial(modelBuilder);
