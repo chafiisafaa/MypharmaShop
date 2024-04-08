@@ -10,7 +10,8 @@ namespace Planning.Models
     {
         public int? Visibilite_VisiteId { get; set; }
         //public int? Visibilite_NombreVitrine { get; set; }
-        public string? Visibilite_DimenssionVitrine { get; set; }
+        public decimal? Visibilite_DimenssionHauteur { get; set; }
+        public decimal? Visibilite_DimenssionLargeur { get; set; }
         public int? Visibilite_NatureIdVitrine { get; set; }
         public List<string>? Visibilite_urls { get; set; }
         public bool? Visibilite_Presence { get; set; }

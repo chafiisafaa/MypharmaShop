@@ -51,6 +51,8 @@ namespace Repository.Data
         public virtual DbSet<Visibilite_Photo> Visibilite_Photo { get; set; } = null!;
         public virtual DbSet<Visite> Visite { get; set; } = null!;
         public virtual DbSet<VO> VO { get; set; } = null!;
+        public virtual DbSet<DotationDistribues> DotationDistribues { get; set; } = null!;
+        public virtual DbSet<PrdVentesParMarque> PrdVentesParMarque { get; set; } = null!;
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -214,6 +216,10 @@ namespace Repository.Data
             modelBuilder.Entity<Merchandising_Photo>(entity =>
             {
                 entity.HasKey(e => e.MerchandisingPhoto_Id).HasName("PK_Merchandising_Photo");
+                entity.HasOne(d => d.MerchandisingPhotoMerchandising)
+                    .WithMany(p => p.MerchandisingPhotos)
+                    .HasForeignKey(d => d.MerchandisingPhoto_MerchandisingId)
+                    .HasConstraintName("FK_Merchandising_Photo_Merchandising");
 
             });
 
@@ -431,6 +437,28 @@ namespace Repository.Data
                     .WithMany(p => p.Voss)
                     .HasForeignKey(d => d.VO_ObjetVisiteId)
                     .HasConstraintName("FK_VO_Objet_Visite");
+            });
+            modelBuilder.Entity<DotationDistribues>(entity =>
+            {
+                entity.HasKey(e => e.DotationDistribues_Id).HasName("PK_DotationDistribues");
+
+                entity.HasOne(d => d.DotationDistribuesVisite)
+                    .WithMany(p => p.DotationDistribues)
+                    .HasForeignKey(d => d.DotationDistribues_VisiteId)
+                    .HasConstraintName("FK_Collaborateur_AspNetUsers");
+                
+
+
+            });
+            modelBuilder.Entity<PrdVentesParMarque>(entity =>
+            {
+                entity.HasKey(e => e.PrdVentesParMarque_Id).HasName("PK_PrdVentesParMarque");
+
+                entity.HasOne(d => d.Visite)
+                    .WithMany(p => p.PrdVentesParMarques)
+                    .HasForeignKey(d => d.PrdVentesParMarque_VisiteId)
+                    .HasConstraintName("FK_PrdVentesParMarque_Visite");
+
             });
 
             OnModelCreatingPartial(modelBuilder);

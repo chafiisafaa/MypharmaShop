@@ -12,6 +12,7 @@ namespace Planning.Models
         //1:Descente; 2:Réglette; 3:Fronton
         public int? Merchandising_TypeId { get; set; }
         public int? Merchandising_MarqueId { get; set; }
+        public List<string> ? Merchandising_Photo { get; set; }
 
     }
 }

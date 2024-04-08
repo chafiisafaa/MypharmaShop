@@ -13,7 +13,8 @@ namespace Domain.Models
         public int Visibilite_Id { get; set; }
         public int? Visibilite_VisiteId { get; set; }
         //public int? Visibilite_NombreVitrine { get; set; }
-        public string? Visibilite_DimenssionVitrine { get; set; }
+        public decimal? Visibilite_DimenssionHauteur { get; set; }
+        public decimal? Visibilite_DimenssionLargeur { get; set; }
         public int? Visibilite_NatureIdVitrine { get; set; }
         public bool? Visibilite_Presence { get; set; }
         public virtual Nature_Vitrine? VisibiliteNatureIdVitrineNavigation { get; set; }

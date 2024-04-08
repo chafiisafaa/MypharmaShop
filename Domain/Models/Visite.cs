@@ -27,6 +27,7 @@ namespace Domain.Models
         public string? Visite_EvenementSpecialeNature { get; set; }
         public string? Visite_Commentaire { get; set; }
         public decimal? Visite_MontantCommande { get; set; }
+        public decimal? Visite_MontantVentes { get; set; }
         public int? Visite_NombreVitrine { get; set; }
 
         //public virtual Objet_Visite? VisiteObjet { get; set; }
@@ -38,6 +39,8 @@ namespace Domain.Models
         public virtual ICollection<SellOut> SellOuts { get; set; }
         public virtual ICollection<Veille_Concurrentielle> VeilleConcurrentielles { get; set; }
         public virtual ICollection<Visibilite> Visibilites { get; set; }
+        public virtual ICollection<DotationDistribues> DotationDistribues { get; set; }
+        public virtual ICollection<PrdVentesParMarque> PrdVentesParMarques { get; set; }
         public virtual ICollection<VO> Vos { get; set; }
     }
 }

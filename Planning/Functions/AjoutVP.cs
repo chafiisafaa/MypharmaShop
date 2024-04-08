@@ -69,8 +69,9 @@ namespace Planning.Functions
                                 var visibilite = new Visibilite
                                 {
                                     Visibilite_VisiteId = resVisite.Entity.Visite_Id,
-                                    Visibilite_DimenssionVitrine=v.Visibilite_DimenssionVitrine,
-                                    Visibilite_NatureIdVitrine=v.Visibilite_NatureIdVitrine,
+                                    Visibilite_DimenssionHauteur = v.Visibilite_DimenssionHauteur,
+                                    Visibilite_DimenssionLargeur=v.Visibilite_DimenssionLargeur,
+                                    Visibilite_NatureIdVitrine =v.Visibilite_NatureIdVitrine,
                                     Visibilite_Presence=v.Visibilite_Presence,
 
                                 };
@@ -91,12 +92,14 @@ namespace Planning.Functions
                                 }
 
                             }
-                            foreach (var nv in Body.NouveautModel.Nouveaute_MarqueIds)
+                            foreach (var nv in Body.NouveautModel)
                             {
                                 var nouveaute = new Nouveaute
                                 {
                                     Nouveaute_VisiteId = resVisite.Entity.Visite_Id,
-                                    Nouveaute_MarqueId = nv,
+                                    Nouveaute_MarqueId = nv.Nouveaute_MarqueId,
+                                    Nouveaute_produitId=nv.Nouveaute_produitId,
+                                    Nouveaute_photo=nv.Nouveaute_photo
 
                                 };
 
@@ -133,7 +136,22 @@ namespace Planning.Functions
                                     Merchandising_TypeId = mer.Merchandising_TypeId,
                                     Merchandising_MarqueId = mer.Merchandising_MarqueId,
                                 };
-                                await _dbContext.Merchandising.AddAsync(merch);
+                                var resMerch=await _dbContext.Merchandising.AddAsync(merch);
+                                await _unitOfWork.Complete();
+
+                                if (resMerch.IsKeySet)
+                                {
+                                    foreach (var merphoto in mer.Merchandising_Photo)
+                                    {
+                                        var merchPhoto = new Merchandising_Photo
+                                        {   MerchandisingPhoto_MerchandisingId= resMerch.Entity.Merchandising_Id,
+                                            MerchandisingPhoto_LienFichier = merphoto,
+
+                                        };
+                                        await _dbContext.Merchandising_Photo.AddAsync(merchPhoto);
+
+                                    }
+                                }
                             }
                             foreach (var veille in Body.VeilleConcurrentielleModel)
                             {
@@ -145,6 +163,18 @@ namespace Planning.Functions
                                     VeilleConcurrentielle_LienPhoto= veille.VeilleConcurrentielle_LienPhoto
                                 };
                                 await _dbContext.Veille_Concurrentielle.AddAsync(veilleC);
+                            }
+                            foreach (var dd in Body.DotationDistribuesModel)
+                            {
+                                var dtd = new DotationDistribues
+                                {
+                                    DotationDistribues_VisiteId = resVisite.Entity.Visite_Id,
+                                    DotationDistribues_ProduitId = dd.DotationDistribues_ProduitId,
+                                    DotationDistribues_Quantites = dd.DotationDistribues_Quantites,
+                                    DotationDistribues_Chanllenge = dd.DotationDistribues_Chanllenge,
+                                    DotationDistribues_Total = dd.DotationDistribues_Total
+                                };
+                                await _dbContext.DotationDistribues.AddAsync(dtd);
                             }
 
                             // Add other entities similarly

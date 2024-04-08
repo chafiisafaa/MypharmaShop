@@ -12,6 +12,7 @@ namespace Planning.Models
         public int? Visite_PlanningId { get; set; }
         public List<int>? objetsIds{ get; set; }
         public decimal? Visite_MontantCommande { get; set; }
+        public decimal? Visite_MontantVentes { get; set; }
         public string? Visite_Commentaire { get; set; }
         public int? Visite_NombreVitrine { get; set; }
 
